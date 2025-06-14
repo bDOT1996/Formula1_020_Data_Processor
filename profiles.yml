@@ -1,0 +1,6 @@
+formula1:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: /db/formula1.db

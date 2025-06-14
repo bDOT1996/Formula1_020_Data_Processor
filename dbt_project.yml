@@ -1,0 +1,6 @@
+name: 'formula1'
+version: '1.0.0'
+config-version: 2
+profile: 'formula1'
+model-paths: ["models"]
+test-paths: ["tests"]

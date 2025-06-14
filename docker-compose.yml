@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  data-processor:
+    build: .
+    container_name: formula1-data-processor
+    volumes:
+      - formula1_data:/data
+      - formula1_db:/db
+    ports:
+      - "8002:5000"
+
+volumes:
+  formula1_data:
+  formula1_db:

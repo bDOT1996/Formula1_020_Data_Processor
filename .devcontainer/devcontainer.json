@@ -1,0 +1,13 @@
+{
+  "name": "Formula1 Data Processor",
+  "image": "mcr.microsoft.com/vscode/devcontainers/python:0-3.13",
+  "postCreateCommand": "pip install dbt-core dbt-duckdb",
+  "extensions": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "samuelcolvin.jinjahtml"
+  ],
+  "settings": {
+    "python.defaultInterpreterPath": "/usr/local/bin/python"
+  }
+}
