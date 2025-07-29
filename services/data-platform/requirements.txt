@@ -1,0 +1,4 @@
+dbt-core>=1.5
+dbt-duckdb>=1.5
+adlfs>=2025.1.0
+azure-identity>=1.14.0

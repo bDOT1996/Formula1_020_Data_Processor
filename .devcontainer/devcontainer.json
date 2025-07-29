@@ -1,6 +1,7 @@
 {
-  "name": "openf1-dbt",
-  "build": { "dockerfile": "Dockerfile", "context": ".." },
+  "name": "openf1-dbt-dev",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "dev",
   "workspaceFolder": "/workspace",
   "extensions": [
     "dbtLabsInc.dbt",
@@ -17,11 +18,8 @@
   },
   "postCreateCommand": "pip install --no-cache-dir duckdb dbt-core dbt-duckdb",
   "remoteUser": "root",
-  // poniżej: jeśli będziesz wystawiać np. DuckDb HTTP UI lub Jupyter, odkryj porty
   "forwardPorts": [8080],
   "portsAttributes": {
-    "8080": {
-      "label": "DuckDB HTTP UI (opcjonalnie)"
-    }
+    "8080": { "label": "dbt docs / Jupyter" }
   }
 }
