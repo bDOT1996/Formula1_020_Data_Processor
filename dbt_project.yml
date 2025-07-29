@@ -1,6 +1,15 @@
-name: 'formula1'
-version: '1.0.0'
+name: openf1_pipeline
+version: '1.0'
 config-version: 2
-profile: 'formula1'
+profile: default
+source-paths: ["models"]
 model-paths: ["models"]
-test-paths: ["tests"]
+data-paths: ["data"]
+models:
+  openf1_pipeline:
+    01_bronze:
+      materialized: table
+    02_silver:
+      materialized: table
+    03_gold:
+      materialized: table

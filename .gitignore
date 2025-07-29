@@ -1,5 +1,9 @@
-__pycache__/
-*.pyc
-.env
+# DuckDB
+/data/database.duckdb
+# VSCode
+.vscode/
+.devcontainer/.devcontainer.local.json
+# dbt
+.dbt/
 target/
-db/
+logs/

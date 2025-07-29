@@ -1,13 +1,27 @@
 {
-  "name": "Formula1 Data Processor",
-  "image": "mcr.microsoft.com/vscode/devcontainers/python:0-3.13",
-  "postCreateCommand": "pip install dbt-core dbt-duckdb",
+  "name": "openf1-dbt",
+  "build": { "dockerfile": "Dockerfile", "context": ".." },
+  "workspaceFolder": "/workspace",
   "extensions": [
-    "ms-python.python",
-    "ms-python.vscode-pylance",
-    "samuelcolvin.jinjahtml"
+    "dbtLabsInc.dbt",
+    "innoverio.vscode-dbt-power-user",
+    "eamodio.gitlens",
+    "dorzey.vscode-sqlfluff",
+    "mechatroner.rainbow-csv",
+    "redhat.vscode-yaml"
   ],
   "settings": {
-    "python.defaultInterpreterPath": "/usr/local/bin/python"
+    "files.autoSave": "afterDelay",
+    "dbt.profilesDir": "/workspace",
+    "dbt.projectDir": "/workspace"
+  },
+  "postCreateCommand": "pip install --no-cache-dir duckdb dbt-core dbt-duckdb",
+  "remoteUser": "root",
+  // poniżej: jeśli będziesz wystawiać np. DuckDb HTTP UI lub Jupyter, odkryj porty
+  "forwardPorts": [8080],
+  "portsAttributes": {
+    "8080": {
+      "label": "DuckDB HTTP UI (opcjonalnie)"
+    }
   }
 }

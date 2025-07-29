@@ -1,6 +1,7 @@
-formula1:
-  target: dev
+default:
   outputs:
     dev:
       type: duckdb
-      path: /db/formula1.db
+      path: data/database.duckdb
+      threads: 4
+  target: dev
