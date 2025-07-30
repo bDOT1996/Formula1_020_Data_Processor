@@ -1,7 +1,0 @@
-default:
-  outputs:
-    dev:
-      type: duckdb
-      path: data/database.duckdb
-      threads: 4
-  target: dev

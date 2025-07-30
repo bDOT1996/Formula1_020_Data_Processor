@@ -1,35 +1,18 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  data-platform:
-    build: ./services/data-platform
-    container_name: Formula1_020
-    volumes:
-      - ./layers:/workspace/layers
-    environment:
-      # ADLS credentials (ustaw w .env lub tutaj)
-      AZURE_STORAGE_ACCOUNT: your_account_name
-      AZURE_TENANT_ID: your_tenant_id
-      AZURE_CLIENT_ID: your_client_id
-      AZURE_CLIENT_SECRET: your_client_secret
-      DBT_PROFILES_DIR: /workspace/.dbt
-    working_dir: /workspace
-    command: sleep infinity
-    networks:
-      - dpl-network
-
-  code-server:
-    build: ./services/code-server
-    container_name: code-server
+  dev:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    container_name: dev-env
     ports:
-      - "8080:8080"
+      - "8443:8443"   # Code Server UI
     volumes:
-      - ./:/workspace
+      - .:/app        # Mount project directory
     environment:
-      PASSWORD: "changeme"    # zmień na silne hasło
-    networks:
-      - dpl-network
-
-networks:
-  dpl-network:
-    driver: bridge
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+      - PASSWORD=abc   # Password for code-server login
+    restart: unless-stopped

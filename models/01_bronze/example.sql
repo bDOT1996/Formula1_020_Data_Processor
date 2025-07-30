@@ -1,1 +1,0 @@
-SELECT * FROM read_json_auto('/data/*.json');
