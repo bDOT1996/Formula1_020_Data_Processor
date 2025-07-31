@@ -1,0 +1,5 @@
+{
+    "python.defaultInterpreterPath": "/home/coder/nosql_venv/bin/python3",
+    "python.venvPath": "/home/coder/nosql_venv",
+    "workbench.colorTheme": "Default Dark+"
+}

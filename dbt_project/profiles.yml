@@ -1,7 +1,7 @@
-my_dbt_project:
+duckdb:
   target: dev
   outputs:
     dev:
       type: duckdb
-      path: '/app/duckdb_database.db'
+      path: /data/duckdb.db
       threads: 1

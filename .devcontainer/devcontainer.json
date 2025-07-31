@@ -1,25 +1,14 @@
 {
-  "name": "openf1-dbt-dev",
-  "dockerComposeFile": ["../docker-compose.yml"],
-  "service": "dev",
-  "workspaceFolder": "/workspace",
+  "name": "Data Engineering Project",
+  "dockerFile": "Dockerfile",
   "extensions": [
-    "dbtLabsInc.dbt",
-    "innoverio.vscode-dbt-power-user",
-    "eamodio.gitlens",
-    "dorzey.vscode-sqlfluff",
-    "mechatroner.rainbow-csv",
-    "redhat.vscode-yaml"
+    "ms-python.python",
+    "ms-azuretools.vscode-docker",
+    "ms-vscode.cpptools",
+    "ms-vscode.cmake-tools",
+    "ms-vscode.vscode-typescript-tslint-plugin"
   ],
   "settings": {
-    "files.autoSave": "afterDelay",
-    "dbt.profilesDir": "/workspace",
-    "dbt.projectDir": "/workspace"
-  },
-  "postCreateCommand": "pip install --no-cache-dir duckdb dbt-core dbt-duckdb",
-  "remoteUser": "root",
-  "forwardPorts": [8080],
-  "portsAttributes": {
-    "8080": { "label": "dbt docs / Jupyter" }
+    "python.pythonPath": "/workspace/.venv/bin/python"
   }
 }

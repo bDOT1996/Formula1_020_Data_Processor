@@ -1,20 +1,7 @@
-name: 'my_dbt_project'
-version: '1.0.0'
-config-version: 2
-
-profile: 'duckdb_profile'
-
-model-paths: ["models"]
-analysis-paths: ["analyses"]
-macro-paths: ["macros"]
-target-path: "target"
-clean-targets:
-  - "target"
-  - "dbt_packages"
+name: 'data_engineering_project'
+version: '1.0'
+profile: 'duckdb'
 
 models:
-  my_dbt_project:
-    staging:
-      +materialized: view
-    marts:
-      +materialized: table
+  data_engineering_project:
+    +materialized: table

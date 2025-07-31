@@ -1,3 +1,10 @@
-dbt-core
-dbt-duckdb
-flask
+python = "^3.12"
+dbt-core = "^1.9.3"
+dbt-duckdb = "^1.9.2"
+pandas = "*"
+apache-airflow = {version = "2.9.3", python = ">=3.10,<3.13"}
+jupyter = "*"
+faker = "*"
+kagglehub = "*"
+argcomplete = "*"
+awscli = "*"
