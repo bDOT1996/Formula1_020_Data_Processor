@@ -1,40 +1,19 @@
-services:
-  code-server:
-    build:
-      context: ./Docker/vscode
-      dockerfile: Dockerfile
-    container_name: vscode_container
-    ports:
-      - 127.0.0.1:8080:8080
-    volumes:
-      - ./workspace:/home/coder/workspace
-    #environment:
-    #  - DEFAULT_WORKSPACE=/home/coder/workspace
-    #  - OPENAI_API_KEY=${OPENAI_API_KEY}
-    #  - HUGGINGFACE_HUB_TOKEN=${HUGGINGFACE_HUB_TOKEN}
-    #  - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
-    #  - PYSPARK_DRIVER_PYTHON=python3
+version: '3.8'
 
-  db:
+services:
+  dbt:
     build:
       context: .
-      dockerfile: Dockerfile.duckdb
+      dockerfile: Dockerfile
+    image: dbt-abt:latest
+    container_name: dbt
     volumes:
-      - ./data:/data
+      - shared_volume:/shared_volume      # współdzielony dostęp do danych z Parquet
+      - .:/app                            # montuje lokalny projekt
+    working_dir: /app
+    tty: true
+    stdin_open: true
 
-  #airflow:
-  #  build:
-  #    context: .
-  #    target: airflow
-  #  ports:
-  #    - "8080:8080"
-  #  environment:
-  #    - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-  #    - AIRFLOW_UID=1000
-  #    - AIRFLOW_GID=1000
-  #  volumes:
-  #    - ./airflow/dags:/opt/airflow/dags
-  #    - ./airflow/logs:/opt/airflow/logs
-  #    - ./airflow/plugins:/opt/airflow/plugins
-  #  depends_on:
-  #    - db
+volumes:
+  shared_volume:
+    name: shared_volume

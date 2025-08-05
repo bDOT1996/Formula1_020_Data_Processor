@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: sessions_bronze
+    description: Surowe dane sesji z pliku Parquet.
+    columns:
+      - name: session_key
+        description: Unikalny identyfikator sesji.
+        tests:
+          - not_null
+      - name: date_start
+        description: Data rozpoczęcia sesji.
+      - name: circuit_key
+        description: Klucz toru.
+
+  - name: drivers_bronze
+    description: Surowe dane kierowców z pliku Parquet.
+    columns:
+      - name: driver_number
+        description: Numer startowy kierowcy.
+        tests:
+          - not_null
+      - name: full_name
+        description: Imię i nazwisko kierowcy.
+
+  - name: positions_bronze
+    description: Surowe dane pozycji kierowców.
+    columns:
+      - name: driver_number
+        description: Numer kierowcy.
+      - name: session_key
+        description: Sesja wyścigu.
+      - name: position
+        description: Pozycja kierowcy.

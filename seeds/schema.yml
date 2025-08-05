@@ -1,0 +1,12 @@
+version: 2
+
+seeds:
+  - name: drivers_lookup
+    description: Lista kierowców z przypisanymi skrótami
+    columns:
+      - name: driver_number
+        tests:
+          - not_null
+          - unique
+      - name: full_name
+      - name: abbr

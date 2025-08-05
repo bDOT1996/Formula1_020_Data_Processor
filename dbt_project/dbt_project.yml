@@ -1,7 +1,0 @@
-name: 'data_engineering_project'
-version: '1.0'
-profile: 'duckdb'
-
-models:
-  data_engineering_project:
-    +materialized: table

@@ -1,0 +1,6 @@
+# drivers_lookup.csv
+# Lista kodów kierowców i pełnych nazw
+driver_number,full_name,abbr
+1,Max Verstappen,VER
+2,Lewis Hamilton,HAM
+3,Sergio Perez,PER

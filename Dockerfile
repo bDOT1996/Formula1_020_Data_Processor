@@ -1,38 +1,22 @@
-# Etap 1: Instalacja systemowych zależności
-FROM ubuntu:20.04 AS base
+# Użyj lekkiego obrazu z Pythonem
+FROM python:3.11-slim
 
-RUN apt-get update && \
-    apt-get install -y \
-    curl \
-    python3-venv \
-    python3.12 \
-    sudo \
-    vim \
+# Ustaw katalog roboczy
+WORKDIR /app
+
+# Zainstaluj zależności systemowe potrzebne dla DuckDB
+RUN apt-get update && apt-get install -y \
     build-essential \
+    curl \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
-# Ustawienie domyślnego Pythona na 3.12
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
+# Zainstaluj DBT z DuckDB i inne przydatne dodatki
+RUN pip install --upgrade pip && \
+    pip install dbt-duckdb dbt-utils pandas
 
-# Instalacja Poetry
-RUN curl -SSL https://install.python-poetry.org | python3 -
+# Skopiuj pliki projektu do obrazu
+COPY . /app
 
-# Etap 2: Konfiguracja środowiska
-FROM base AS dev
-
-WORKDIR /workspace
-
-COPY pyproject.toml .
-RUN poetry install --no-dev
-
-COPY . .
-
-# Etap 3: Instalacja Airflow
-FROM apache/airflow:2.9.3-python3.12 AS airflow
-
-USER root
-
-COPY --from=dev /workspace /workspace
-WORKDIR /workspace
-
-RUN pip install --no-cache-dir -r airflow/requirements.txt
+# Domyślny katalog przy uruchomieniu kontenera
+CMD ["dbt", "run"]

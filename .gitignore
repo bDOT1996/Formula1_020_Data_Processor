@@ -1,9 +1,9 @@
-# DuckDB
-/data/database.duckdb
-# VSCode
-.vscode/
-.devcontainer/.devcontainer.local.json
-# dbt
-.dbt/
 target/
-logs/
+dbt_modules/
+.DS_Store
+*.pyc
+__pycache__/
+.pytest_cache/
+.venv/
+*.db
+*.duckdb

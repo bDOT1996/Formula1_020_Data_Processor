@@ -1,0 +1,22 @@
+name: dbt_project
+version: '1.0'
+config-version: 2
+
+profile: duckdb_profile  # Nawiązanie do profiles.yml
+
+model-paths: ["models"]      # Ścieżki do modeli
+seed-paths: ["seeds"]        # Ścieżki do seedów
+macro-paths: ["macros"]      # Ścieżki do makr
+test-paths: ["tests"]        # Ścieżki do testów
+
+target-path: "target"
+clean-targets: ["target", "dbt_modules"]
+
+models:
+  abt_project:
+    01_bronze:
+      +materialized: view       # Bronze jako widoki
+    02_silver:
+      +materialized: table      # Silver jako tabele
+    03_gold:
+      +materialized: table      # Gold jako tabele

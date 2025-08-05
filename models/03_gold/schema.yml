@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: driver_position_counts
+    description: Liczba razy, kiedy kierowca zajął daną pozycję.
+    columns:
+      - name: driver_number
+        tests:
+          - not_null
+      - name: position
+      - name: position_count
+
+  - name: driver_avg_laptime_vs_position
+    description: Korelacja średniego czasu okrążenia z końcową pozycją kierowcy.
+    columns:
+      - name: driver_number
+      - name: session_key
+      - name: avg_lap_time
+        description: Średni czas okrążenia w sekundach.
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: "avg_lap_time >= 50 and avg_lap_time <= 180"
+      - name: position
