@@ -1,22 +1,81 @@
-name: dbt_project
-version: '1.0'
-config-version: 2
+# ===============================
+# Główna konfiguracja projektu
+# ===============================
+name: 'f1_project'              # nazwa projektu
+version: '1.0.0'                # wersja projektu
+config-version: 2               # wersja konfiguracji dbt (zawsze 2 dla nowych projektów)
 
-profile: duckdb_profile  # Nawiązanie do profiles.yml
+# Profil połączenia do bazy danych (definiowany w profiles.yml) - nazwa musi się pokrywać
+profile: 'f1_project'
 
-model-paths: ["models"]      # Ścieżki do modeli
-seed-paths: ["seeds"]        # Ścieżki do seedów
-macro-paths: ["macros"]      # Ścieżki do makr
-test-paths: ["tests"]        # Ścieżki do testów
+# ===============================
+# Domyślne ustawienia ścieżek w projekcie
+# ===============================
+model-paths: ["models"]        # folder z modelami dbt (bronze/silver/gold)
+seed-paths: ["seeds"]           # folder z plikami seed (CSV do ładowania)
+macro-paths: ["macros"]         # folder z makrami
+#snapshot-paths: ["snapshots"]  # folder z snapshotami SCD2
+test-paths: ["tests"]           # folder z testami własnymi
+#analysis-paths: ["analysis"]   # folder z zapytaniami analitycznymi
+#docs-paths: ["docs"]           # folder z dokumentacją dodatkową
 
-target-path: "target"
-clean-targets: ["target", "dbt_modules"]
+# Foldery docelowe po buildzie
+#target-path: "target"          # output kompilacji modeli
+#clean-targets:
+#  - "target"
+#  - "dbt_modules"              # folder tymczasowy dla modułów dbt
 
+# ===============================
+# Globalne konfiguracje dla modeli
+# ===============================
 models:
-  abt_project:
-    01_bronze:
-      +materialized: view       # Bronze jako widoki
-    02_silver:
-      +materialized: table      # Silver jako tabele
-    03_gold:
-      +materialized: table      # Gold jako tabele
+  f1_project:
+    +materialized: table         # domyślna materializacja dla wszystkich modeli
+    #+schema: bronze              # domyślne schema (można nadpisać per folder)
+    +enabled: true               # model aktywny
+    +tags: ["all_models"]        # tag globalny, do dokumentacji - ułatwia filtrowanie modeli
+    +persist_docs:
+        relation: true           # dokumentacja dla tabel i widoków
+        columns: true            # dokumentacja dla kolumn
+    +meta:                       # dodatkowe meta dane
+      business_owner: "bDOT"
+      #slack_channel: "#f1"      # potencjalny kanał na slacku
+      #sla: "24h"
+
+  # -------------------------------
+  # Warstwa bronze (staging)
+  # -------------------------------
+  #01_bronze:
+  #  +schema: bronze
+  #  +tags: ["bronze","raw","staging"]
+    #+pre-hook:                  # hook przed materializacją
+    #  - "alter session set autocommit = true"
+    #+post-hook:                 # hook po materializacji
+    #  - "grant select on {{ this }} to role analytics"
+
+  # -------------------------------
+  # Warstwa silver (czyszczenie / SCD2)
+  # -------------------------------
+  02_silver:
+    +schema: silver
+    +tags: ["silver","cleaned","scd2"]
+    #+materialized: table        # nadpisanie materializacji, jeśli potrzebne
+
+  # -------------------------------
+  # Warstwa gold (raporty / agregacje)
+  # -------------------------------
+  03_gold:
+    +schema: gold
+    +tags: ["gold","analytics","reports"]
+    #+materialized: table        # nadpisanie materializacji, jeśli potrzebne
+
+# ===============================
+# Konfiguracja seeds
+# ===============================
+seeds:
+  f1_project:
+    +schema: reference
+    +quote_columns: false
+
+# Wersja DBT
+require-dbt-version: [">=1.8.0", "<2.0.0"]

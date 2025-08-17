@@ -1,22 +1,16 @@
-# Użyj lekkiego obrazu z Pythonem
 FROM python:3.11-slim
 
+# Instalacja zależności systemowych
+RUN apt-get update && apt-get install -y git curl
+
+# Instalacja DBT i adaptera Snowflake
+RUN pip install --no-cache-dir dbt-snowflake
+
 # Ustaw katalog roboczy
-WORKDIR /app
+WORKDIR /usr/app
 
-# Zainstaluj zależności systemowe potrzebne dla DuckDB
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+# Kopiowanie repozytorium DBT
+COPY . .
 
-# Zainstaluj DBT z DuckDB i inne przydatne dodatki
-RUN pip install --upgrade pip && \
-    pip install dbt-duckdb dbt-utils pandas
-
-# Skopiuj pliki projektu do obrazu
-COPY . /app
-
-# Domyślny katalog przy uruchomieniu kontenera
+# Domyślna komenda
 CMD ["dbt", "run"]

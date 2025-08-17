@@ -1,34 +1,61 @@
 version: 2
 
-models:
-  - name: sessions_bronze
-    description: Surowe dane sesji z pliku Parquet.
-    columns:
-      - name: session_key
-        description: Unikalny identyfikator sesji.
-        tests:
-          - not_null
-      - name: date_start
-        description: Data rozpoczęcia sesji.
-      - name: circuit_key
-        description: Klucz toru.
+sources:
+  - name: bronze
+    database: "{{ ( env_var('SNOWFLAKE_DATABASE') ) }}"
+    schema: bronze
+    tables:
+      ### - Tier 1 - ################################
+      - name: bronze_meetings
+        description: Stores information about racing meetings.
 
-  - name: drivers_bronze
-    description: Surowe dane kierowców z pliku Parquet.
-    columns:
-      - name: driver_number
-        description: Numer startowy kierowcy.
-        tests:
-          - not_null
-      - name: full_name
-        description: Imię i nazwisko kierowcy.
+      ### - Tier 2 - ################################
+      - name: bronze_sessions
+        description: Stores session details for each meeting.
 
-  - name: positions_bronze
-    description: Surowe dane pozycji kierowców.
-    columns:
-      - name: driver_number
-        description: Numer kierowcy.
-      - name: session_key
-        description: Sesja wyścigu.
-      - name: position
-        description: Pozycja kierowcy.
+      ### - Tier 3 - ################################
+      - name: bronze_drivers
+        description: Stores driver information for each session.
+
+      - name: bronze_race_control
+        description: Stores race control messages and events.
+
+      - name: bronze_session_result
+        description: Stores results for each session.
+
+      - name: bronze_starting_grid
+        description: Stores starting grid positions for sessions.
+
+      - name: bronze_stints
+        description: Stores tyre stint information for drivers.
+
+      - name: bronze_team_radio
+        description: Stores team radio communications.
+
+      - name: bronze_weather
+        description: Stores weather conditions during sessions.
+
+      ### - Tier 4 - ################################
+      - name: bronze_laps
+        description: Stores lap time data for drivers.
+
+      - name: bronze_overtakes
+        description: Stores overtaking events during sessions.
+
+      - name: bronze_pit
+        description: Stores pit stop information.
+
+      - name: bronze_position
+        description: Stores driver position data during sessions.
+      
+      ### - Tier 5.1 - ##############################
+      - name: bronze_intervals
+        description: Stores interval and gap data between drivers.
+      
+      ### - Tier 5.2 - ##############################
+      - name: bronze_car_data
+        description: Stores telemetry data from cars.
+
+      - name: bronze_location
+        description: Stores location data for drivers.
+      

@@ -1,7 +1,21 @@
-duckdb_profile:
-  target: dev
+# ===============================
+# konfiguracja połączeń
+# ===============================
+
+f1_project:                     # musi się zgadzać z profile w dbt_project.yml
+  target: dev                   # domyślny target środowiska
   outputs:
+    # ----------------------------------------
+    # Target dla środowiska developerskiego
+    # ----------------------------------------
     dev:
-      type: duckdb
-      path: /shared_volume/duckdb/dbt.duckdb  # Wspólny volume z Airflow i fetcherem
-      threads: 4
+      type: snowflake                                     # typ bazy danych (inne np. databricks, postgres, redshift)
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: ACCOUNTADMIN
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE') }}"
+      schema: "{{ env_var('SNOWFLAKE_SCHEMA') }}"
+      threads: 2
+      client_session_keep_alive: False
