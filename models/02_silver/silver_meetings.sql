@@ -49,17 +49,17 @@ select
     
     -- hashdiff: hash kolumn biznesowych, wykrywanie zmian
     md5(concat_ws('||', 
-            circuit_key,
-            circuit_short_name,
-            country_code,
-            country_key,
-            country_name,
-            date_start,
-            gmt_offset,
-            location,
-            meeting_name,
-            meeting_official_name)
-       ) as hashdiff,
+        circuit_key,
+        circuit_short_name,
+        country_code,
+        country_key,
+        country_name,
+        date_start,
+        gmt_offset,
+        location,
+        meeting_name,
+        meeting_official_name)
+    ) as hashdiff,
     
     -- created_at: timestamp dodania rekordu
     current_timestamp() as created_at

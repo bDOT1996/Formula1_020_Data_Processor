@@ -1,12 +1,12 @@
 # ===============================
 # Główna konfiguracja projektu
 # ===============================
-name: 'f1_project'              # nazwa projektu
+name: f1_project                # nazwa projektu
 version: '1.0.0'                # wersja projektu
 config-version: 2               # wersja konfiguracji dbt (zawsze 2 dla nowych projektów)
 
 # Profil połączenia do bazy danych (definiowany w profiles.yml) - nazwa musi się pokrywać
-profile: 'f1_project'
+profile: f1_project
 
 # ===============================
 # Domyślne ustawienia ścieżek w projekcie

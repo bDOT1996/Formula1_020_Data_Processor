@@ -9,3 +9,4 @@ __pycache__/
 *.duckdb
 .env
 .temp/
+README_instruction.md

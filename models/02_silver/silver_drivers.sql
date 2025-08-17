@@ -48,9 +48,18 @@ select
     md5(concat_ws('||', meeting_key, session_key, driver_number)) as id,
     
     -- hashdiff: hash kolumn biznesowych, wykrywanie zmian
-    md5(concat_ws('||', team_name, broadcast_name, name_acronym, country_code, 
-                  team_colour, first_name, full_name, last_name, headshot_url)
-       ) as hashdiff,
+    md5(concat_ws(
+        '||',
+        team_name,
+        broadcast_name,
+        name_acronym,
+        country_code,
+        team_colour,
+        first_name,
+        full_name,
+        last_name,
+        headshot_url)
+    ) as hashdiff,
     
     -- created_at: timestamp dodania rekordu
     current_timestamp() as created_at

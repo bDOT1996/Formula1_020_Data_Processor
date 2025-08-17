@@ -13,7 +13,7 @@ with
 -- ============================================
     bronze as (
         select *
-        from {{ source('bronze', 'bronze_sessions') }}
+        from {{ source('bronze', 'bronze_race_control') }}
     ),
 
 -- ============================================
@@ -22,47 +22,40 @@ with
 
     dedup as (
         select DISTINCT
-            year,
-            meeting_key,
             session_key,
-            circuit_key,
-            circuit_short_name,
-            country_code,
-            country_key,
-            country_name,
-            date_end,
-            date_start,
-            gmt_offset,
-            location,
-            session_name,
-            session_type
+            meeting_key,
+            category,
+            date,
+            driver_number,
+            flag,
+            lap_number,
+            message,
+            scope,
+            sector
         FROM bronze
     )
 
 -- ============================================
--- Finalna tabela
+-- Finalna tabela silver_drivers
 -- ============================================
 
 select
     *,
     
     -- surrogate_key: hash kolumn kluczowych
-    md5(concat_ws('||', year, meeting_key, session_key)) as id,
+    md5(concat_ws('||', meeting_key, session_key, driver_number)) as id,
     
     -- hashdiff: hash kolumn biznesowych, wykrywanie zmian
     md5(concat_ws(
-        '||', 
-        circuit_key,
-        circuit_short_name,
-        country_code,
-        country_key,
-        country_name,
-        date_end,
-        date_start,
-        gmt_offset,
-        location,
-        session_name,
-        session_type)
+        '||',
+        category,
+        date,
+        driver_number,
+        flag,
+        lap_number,
+        message,
+        scope,
+        sector)
     ) as hashdiff,
     
     -- created_at: timestamp dodania rekordu

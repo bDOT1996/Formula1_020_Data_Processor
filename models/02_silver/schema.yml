@@ -99,3 +99,37 @@ models:
         description: "Numer kierowcy."
         tests:
           - not_null
+
+
+  # ============================================
+  # silver_race_control
+  # ============================================
+  - name: silver_race_control
+    description: >
+      Deduplikacja danych z bronze_race_control. Dodatkowo dodanie:
+      - id - hash kolumn kluczowych (surrogate_key),
+      - hashdiff - hash kolumn biznesowych, wykrywanie zmian
+      - created_at - timestamp dodania rekordu.
+      Klucze główne: meeting_key, session_key, driver_number.
+    columns:
+      - name: id
+        description: "Hash kolumn kluczowych – unikalny identyfikator rekordu."
+        tests:
+          - not_null
+          - unique
+      - name: hashdiff
+        description: "Hash pozostałych kolumn biznesowych – pozwala wykrywać zmiany."
+      - name: created_at
+        description: "Data wstawienia rekordu."
+      - name: meeting_key
+        description: "Klucz spotkania."
+        tests:
+          - not_null
+      - name: session_key
+        description: "Klucz sesji w czasie spotkania."
+        tests:
+          - not_null
+      - name: driver_number
+        description: "Numer kierowcy."
+        tests:
+          - not_null

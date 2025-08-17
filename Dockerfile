@@ -14,3 +14,4 @@ COPY . .
 
 # Domyślna komenda
 CMD ["dbt", "run"]
+#CMD ["/bin/bash"]

@@ -3,12 +3,13 @@ version: '3.8'
 services:
   dbt:
     build: .
-    container_name: dbt
+    container_name: Formula1_020_Data_Processor
     volumes:
       - ./models:/usr/app/models
       - ./macros:/usr/app/macros
       - ./seeds:/usr/app/seeds
       - ./profiles.yml:/root/.dbt/profiles.yml:ro
+      - ./target:/usr/app/target
     environment:
       - SNOWFLAKE_ACCOUNT=${SNOWFLAKE_ACCOUNT}
       - SNOWFLAKE_USER=${SNOWFLAKE_USER}
@@ -16,3 +17,7 @@ services:
       - SNOWFLAKE_WAREHOUSE=${SNOWFLAKE_WAREHOUSE}
       - SNOWFLAKE_DATABASE=${SNOWFLAKE_DATABASE}
       - SNOWFLAKE_SCHEMA=${SNOWFLAKE_SCHEMA}
+    ports:
+    - "8080:8080"
+    tty: true
+    stdin_open: true
